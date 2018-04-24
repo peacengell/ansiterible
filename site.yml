@@ -2,7 +2,7 @@
 - name: install mysql client on all hosts
   hosts: all
   user: vagrant
-  sudo: yes
+  become: yes
 
   roles:
     - common
@@ -11,7 +11,7 @@
 - name: configure and deploy the webservers and application code
   hosts: web
   user: vagrant
-  sudo: yes
+  become: yes
 
   roles:
     - web
@@ -19,7 +19,7 @@
 - name: deploy MySQL and configure the databases
   hosts: database
   user: vagrant
-  sudo: yes
+  become: yes
 
   roles:
     - database

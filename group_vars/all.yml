@@ -13,3 +13,16 @@ mysql_port: 3306
 dbuser: dbuser
 dbname: dbtest
 upassword: secret
+
+
+# EPEL Repo Variables
+epel_repo_url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
+epel_repo_gpg_key_url: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+epel_repofile_path: "/etc/yum.repos.d/epel.repo"
+
+# webtatic Repo Variables
+webtatic_repo_url: "https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"
+webtatic_repo_gpg_key_url: "/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7"
+webtatic_repofile_path: "/etc/yum.repos.d/webtatic.repo"
+
+

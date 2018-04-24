@@ -7,7 +7,13 @@
   with_items:
    - mysql-client
 
-- name: "webtatic"
-  repo_package: "https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"
-  #repo_package: "webtatic-release"
-  repo_gpg_key_url: "/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7"
+- name: Install Epel Repo
+  yum:
+    name: epel-release
+    state: absent
+
+- name: Install Webtatic Repo
+  yum:
+    name: webtatic-release
+    state: present
+    enable: yes
