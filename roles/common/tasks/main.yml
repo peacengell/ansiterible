@@ -1,0 +1,13 @@
+---
+- name: upgrade all packages
+  yum: name=* state=latest
+
+# Install the package "mysql"
+- yum: name={{item}} state=present
+  with_items:
+   - mysql-client
+
+- name: "webtatic"
+  repo_package: "https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"
+  #repo_package: "webtatic-release"
+  repo_gpg_key_url: "/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7"

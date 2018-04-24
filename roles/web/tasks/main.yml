@@ -1,0 +1,24 @@
+---
+- name: upgrade all packages
+  yum: name=* state=latest
+
+# Install the package "mysql"
+- yum: name={{item}} state=present
+  with_items:
+   - nginx
+   - php5-fpm
+   - php5-mysql
+
+- name: Create nginx configuration file
+  template: src=default dest=/etc/nginx/sites-available/default
+  notify:
+  - restart nginx
+
+- name: Add wall.php script that demonstrates php and mysql functionality
+  template: src=wall.php dest=/usr/share/nginx/html/wall.php
+
+- name: nginx service state
+  service: name=nginx state=started enabled=yes
+
+- name: php-fpm service state
+  service: name=php-fpm state=started enabled=yces
