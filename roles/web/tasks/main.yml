@@ -3,16 +3,18 @@
   yum: name=* state=latest
 
 # Install the package "mysql"
-- yum: name={{item}} state=present
+- name: Install Web Server Package
+  yum: name={{item}} state=present
   with_items:
    - nginx
-   - php5-fpm
-   - php5-mysql
+   #- php5-fpm
+   #- php5-mysql
 
 - name: Create nginx configuration file
-  template: src=default dest=/etc/nginx/sites-available/default
+  template: src=sites-enabled/example.com.conf dest=/etc/nginx/conf.d/example.com.conf
   notify:
-  - restart nginx
+  #- restart nginx
+  become: true
 
 - name: Add wall.php script that demonstrates php and mysql functionality
   template: src=wall.php dest=/usr/share/nginx/html/wall.php
@@ -21,4 +23,4 @@
   service: name=nginx state=started enabled=yes
 
 - name: php-fpm service state
-  service: name=php-fpm state=started enabled=yces
+  service: name=php-fpm state=started enabled=yes

@@ -1,3 +1,6 @@
 ---
-domain: {{ domain_name }}
-env : {{ environment }}
+#domain: "{{ domain_name }}"
+#env : "{{ environment }}"
+
+domain: tricky-bit.com
+env : stag

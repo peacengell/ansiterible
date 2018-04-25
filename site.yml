@@ -1,7 +1,7 @@
 ---
 - name: install mysql client on all hosts
   hosts: all
-  user: vagrant
+  user: thieryl
   become: yes
 
   roles:
@@ -10,7 +10,7 @@
 
 - name: configure and deploy the webservers and application code
   hosts: web
-  user: vagrant
+  user: thieryl
   become: yes
 
   roles:
@@ -18,7 +18,7 @@
 
 - name: deploy MySQL and configure the databases
   hosts: database
-  user: vagrant
+  user: thieryl
   become: yes
 
   roles:

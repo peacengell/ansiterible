@@ -1,19 +1,27 @@
 ---
 - name: upgrade all packages
-  yum: name=* state=latest
+  dnf: name=* state=latest
+  become: yes
 
 # Install the package "mysql"
-- yum: name={{item}} state=present
+- name: Install MySQL Client
+  dnf: name={{item}} state=present
   with_items:
-   - mysql-client
+   - mysql
+  become: yes
 
 - name: Install Epel Repo
-  yum:
+  dnf:
     name: epel-release
     state: absent
+    enablerepo: yes
+  become: true
 
-- name: Install Webtatic Repo
-  yum:
+- name: Add multiple repositories into the same file (1/2)
+  yum_repository:
     name: webtatic-release
-    state: present
-    enable: yes
+    description: webtatic-release repo
+    file: external_repos
+    baseurl: https://mirror.webtatic.com/pub/epel/$releasever/webtatic-release.rpm
+    gpgcheck: no
+  become: true

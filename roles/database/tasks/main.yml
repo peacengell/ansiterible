@@ -1,14 +1,16 @@
 ---
 - name: upgrade all packages
-  yum: name=* state=latest
+  dnf: name=* state=latest
 
 # Install the packages
-- yum: name={{item}} state=present
+- name : Install the Packages
+  dnf: name={{item}} state=present
   with_items:
-   - python-pip
-   - python-dev
-   - mysql-server
-   - libmysqlclient-dev
+    - python-pip
+    - python-devel
+    - mysql-server
+    - libmysqlclient
+  become: yes
 
 - pip: name=MySQL-python
 

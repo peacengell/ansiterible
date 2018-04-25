@@ -2,7 +2,7 @@
 localhost   ansible_connection=local
 
 [web]
-192.168.51.4    ansible_connection=ssh
+localhost   ansible_connection=local
 
 [database]
-192.168.52.4    ansible_connection=ssh
+localhost    ansible_connection=local
