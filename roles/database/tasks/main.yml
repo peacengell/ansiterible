@@ -1,23 +1,28 @@
 ---
 - name: upgrade all packages
-  dnf: name=* state=latest
+  yum: name=* state=latest
+
+- name: Install MySQL Repo
+  yum:
+    name: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+    state: present
 
 # Install the packages
 - name : Install the Packages
-  dnf: name={{item}} state=present
+  yum: name={{item}} state=present
   with_items:
     - python-pip
     - python-devel
     - mysql-server
-    - libmysqlclient
+    - mysql-devel
+    - MySQL-python
   become: yes
 
-- pip: name=MySQL-python
 
-- name: Create Mysql configuration file
-  lineinfile: dest=/etc/mysql/my.cnf regexp='^bind-address(\s*)=' line='bind-address\1= {{ mysql_host }}'  backrefs=yes
-  notify:
-  - restart mysql
+#- name: Create Mysql configuration file
+#  lineinfile: dest=/etc/mysql/my.cnf regexp='^bind-address(\s*)=' line='bind-address\1= {{ mysql_host }}'  backrefs=yes
+#  notify:
+#  - restart mysql
 
 - name: Start Mysql Service
   service: name=mysql state=started enabled=true
