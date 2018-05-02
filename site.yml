@@ -5,8 +5,8 @@
   become: yes
 
   roles:
+    - webdocs
     - common
-
 
 - name: configure and deploy the webservers and application code
   hosts: web
