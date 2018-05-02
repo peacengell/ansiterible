@@ -1,0 +1,18 @@
+---
+
+- name: Download n98-magerun binary
+  get_url: |
+    url="{{ n98_download_url }}"
+    dest="{{ install_to_path }}/{{ n98_binary_name }}"
+    mode=0755
+
+- name: Enable crontab to auto update composer
+  when: auto_update == true
+  template: >
+    src=crontab_n98-magerun-update.j2
+    dest=/etc/cron.daily/n98-magerun-update
+    owner=root
+    group=root
+    mode=0755
+
+#- debug: msg="{{ auto_update }}"

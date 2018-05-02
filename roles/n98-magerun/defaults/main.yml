@@ -1,0 +1,14 @@
+---
+
+# Where do you want to install n98-magerun
+install_to_path: /usr/local/bin
+
+# Where to download composer from
+n98_download_url: https://files.magerun.net/n98-magerun.phar
+
+# What do you want to call n98-magerun.phar
+## Some people like n98-magerun.phar some like just magerun
+n98_binary_name: n98-magerun
+
+# Enable daily cronjob to update composer
+auto_update: yes

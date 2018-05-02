@@ -1,0 +1,14 @@
+#!/bin/bash
+
+## This script will be executed nightly
+## as it will live in crontab.daily
+
+# http://wiki.bash-hackers.org/commands/classictest
+
+set -e
+
+## test of the binary exists and is executable
+[ -x {{ install_to_path }}/{{ n98_binary_name }} ] || exit 0
+
+## Run the update
+{{ install_to_path }}/{{ n98_binary_name }} selfupdate

@@ -108,9 +108,6 @@
 - name: Add wall.php script that demonstrates php and mysql functionality
   template: src=wall.php dest=/var/www/magento/{{ env }}
 
-- name: nginx service status
-  service: name=nginx state=stopped enabled=yes
-
 - name: Add Redbox PHP-FPM config file
   template: src=_php-fpm.conf dest=/etc/php-fpm.d/www.conf
   notify:
