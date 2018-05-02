@@ -6,6 +6,7 @@
 - name: Install Web Server Package
   yum: name={{item}} state=present
   with_items:
+    - nginx
     - php56w
     - php56w-pdo
     #- php56w-mysqlnd
@@ -21,13 +22,24 @@
     - php56w-json
     - php56w-iconv
     - php56w-soap
+    - php56w-fpm
     - redis.x86_64
+    - python-passlib
 
 - name: Creates nginx configs directory
   file:
     path: /etc/nginx/redbox.d
     state: directory
     mode: 755
+
+- name: Create http_auth passwd file
+  htpasswd:
+    path: /etc/nginx/redbox.d/.htpasswd
+    name: johndoe
+    password: '9s36?;fyNp'
+    owner: root
+    group: nginx
+    mode: 0640
 
 
 - name: Create nginx configuration file
@@ -38,6 +50,7 @@
   template: src=_php_fastcgi.conf dest=/etc/nginx/redbox.d/php_fastcgi.conf
   template: src=_wordpress.conf dest=/etc/nginx/magento.d/magento.conf
   template: src=_letsencrypt.conf dest=/etc/nginx/redbox.d/letsencrypt.conf
+  template: src=_ht_auth.conf dest=/etc/nginx/redbox.d/ht_auth.conf
   notify:
   #- restart nginx
   become: true

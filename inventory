@@ -1,8 +1,8 @@
 [control]
-54.245.36.67   ansible_connection=ssh
+54.218.167.228   ansible_connection=ssh
 
 [web]
-54.245.36.67   ansible_connection=ssh
+54.218.167.228   ansible_connection=ssh
 
 [database]
-54.245.36.67    ansible_connection=ssh
+54.218.167.228    ansible_connection=ssh
