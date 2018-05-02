@@ -111,9 +111,8 @@
 - name: nginx service status
   service: name=nginx state=stopped enabled=yes
 
-- name: : Add Redbox PHP-FPM config file
-  file:
-    template: src=_php-fpm.conf dest=/etc/php-fpm.d/www.conf
+- name: Add Redbox PHP-FPM config file
+  template: src=_php-fpm.conf dest=/etc/php-fpm.d/www.conf
   notify:
   - restart php-fpm
   become: true
