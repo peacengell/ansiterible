@@ -91,6 +91,15 @@
 #  args:
 #    creates: /etc/letsencrypt/live/{{ domain }}
 
+- name: Add letsencrypt cronjob for cert renewal
+  cron:
+    name: letsencrypt_renewal
+    special_time: weekly
+    job: letsencrypt --renew certonly -n --webroot -w /var/www/_letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain }} && service nginx reload
+  notify:
+    - restart nginx
+
+
 - name: Generate dhparams
   shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
   args:
