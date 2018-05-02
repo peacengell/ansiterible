@@ -13,6 +13,8 @@
   roles:
     - web
     - { role: newrelic, newrelic_license_key: ab0e123c0bdc8c77cc5922bd67416a080518181 }
+    - n98-magerun
+    - composer
 
 - name: deploy MySQL and configure the databases
   hosts: database
