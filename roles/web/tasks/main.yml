@@ -6,21 +6,61 @@
 - name: Install Web Server Package
   yum: name={{item}} state=present
   with_items:
-   - nginx
-   #- php5-fpm
-   #- php5-mysql
+    - php56w
+    - php56w-pdo
+    #- php56w-mysqlnd
+    - php56w-opcache
+    - php56w-xml
+    - php56w-mcrypt
+    - php56w-gd
+    - php56w-devel
+    - php56w-mysql
+    - php56w-intl
+    - php56w-mbstring
+    - php56w-bcmath
+    - php56w-json
+    - php56w-iconv
+    - php56w-soap
+    - redis.x86_64
+
+- name: Creates nginx configs directory
+  file:
+    path: /etc/nginx/redbox.d
+    state: directory
+    mode: 755
+
 
 - name: Create nginx configuration file
-  template: src=sites-enabled/example.com.conf dest=/etc/nginx/conf.d/example.com.conf
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+  template: src=sites-enabled/example.com.conf dest=/etc/nginx/conf.d/{{ domain }}.conf
+  template: src=_general.conf dest=/etc/nginx/redbox.d/general.conf
+  template: src=_php.conf dest=/etc/nginx/redbox.d/php.conf
+  template: src=_php_fastcgi.conf dest=/etc/nginx/redbox.d/php_fastcgi.conf
+  template: src=_wordpress.conf dest=/etc/nginx/magento.d/magento.conf
+  template: src=_letsencrypt.conf dest=/etc/nginx/redbox.d/letsencrypt.conf
   notify:
   #- restart nginx
   become: true
 
-- name: Add wall.php script that demonstrates php and mysql functionality
-  template: src=wall.php dest=/usr/share/nginx/html/wall.php
+- name: Create Web root directory
+  file:
+      path: /var/www/magento/{{ domain }}
+      state: directory
+      owner: mage
+      group: mage
+      mode: 0755
 
-- name: nginx service state
-  service: name=nginx state=started enabled=yes
+- name: Add wall.php script that demonstrates php and mysql functionality
+  template: src=wall.php dest=/var/www/magento/{{ domain }}
+
+- name: nginx service status
+  service: name=nginx state=stopped enabled=yes
+
+- name: Set PHP-FPM configuration file
+  template: src=_php-fpm.conf dest=/etc/php-fpm.d/{{ domain }}.conf
+  notify:
+  - restart php-fpm
+  become: true
 
 - name: php-fpm service state
   service: name=php-fpm state=started enabled=yes

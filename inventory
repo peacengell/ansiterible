@@ -1,8 +1,8 @@
 [control]
-localhost   ansible_connection=local
+54.245.36.67   ansible_connection=ssh
 
 [web]
-localhost   ansible_connection=local
+54.245.36.67   ansible_connection=ssh
 
 [database]
-localhost    ansible_connection=local
+54.245.36.67    ansible_connection=ssh

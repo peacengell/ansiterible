@@ -1,0 +1,8 @@
+
+---
+repo_by_version:
+  6: https://mirror.webtatic.com/yum/el6/latest.rpm
+  #7: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+key_by_version:
+  6: https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-andy
+  #7: https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7

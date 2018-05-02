@@ -1,27 +1,52 @@
 ---
 - name: upgrade all packages
-  dnf: name=* state=latest
+  yum: name=* state=latest
   become: yes
 
-# Install the package "mysql"
+- name: Create a login user
+  user:
+    name: mage
+    password: '???'
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+    state: present
+    shell: /bin/bash       # Defaults to /bin/bash
+    system: no             # Defaults to no
+    createhome: yes        # Defaults to yes
+    home: /home/mage  # Defaults to /home/<username
+
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Add sudoers users to wheel group
+  user: name=mage groups=wheel append=yes state=present createhome=yes
+
+- name: Add repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://dl.fedoraproject.org/pub/epel/7/$basearch/
+    gpgcheck: no
+
+- name: Install Webtatic Repo
+  yum:
+    name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+    state: present
+
 - name: Install MySQL Client
-  dnf: name={{item}} state=present
+  yum: name={{item}} state=present
   with_items:
    - mysql
+   #- python2-yum
   become: yes
-
-- name: Install Epel Repo
-  dnf:
-    name: epel-release
-    state: absent
-    enablerepo: yes
-  become: true
-
-- name: Add multiple repositories into the same file (1/2)
-  yum_repository:
-    name: webtatic-release
-    description: webtatic-release repo
-    file: external_repos
-    baseurl: https://mirror.webtatic.com/pub/epel/$releasever/webtatic-release.rpm
-    gpgcheck: no
-  become: true
