@@ -1,13 +1,9 @@
 ---
-proxy_env:
-  # put a dummy variable in here when proxy not needed
-  stack: lemp
-#  http_proxy: http://proxy.example.com:8080
-#  https_proxy: https://proxy.example.com:8080
+# Nginx
+domain: tricky-bit.com
+env : stag
 
-nginx_host: 192.168.51.4
-mysql_host: 192.168.52.4
-
+#database
 mysqlservice: mysqld
 mysql_port: 3306
 dbuser: dbuser
@@ -15,14 +11,5 @@ dbname: dbtest
 upassword: secret
 
 
-# EPEL Repo Variables
-epel_repo_url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
-epel_repo_gpg_key_url: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
-epel_repofile_path: "/etc/yum.repos.d/epel.repo"
-
-# webtatic Repo Variables
-webtatic_repo_url: "https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"
-webtatic_repo_gpg_key_url: "/etc/pki/rpm-gpg/RPM-GPG-KEY-webtatic-el7"
-webtatic_repofile_path: "/etc/yum.repos.d/webtatic.repo"
 
 

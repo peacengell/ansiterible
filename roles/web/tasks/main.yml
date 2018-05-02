@@ -9,7 +9,6 @@
     - nginx
     - php56w
     - php56w-pdo
-    #- php56w-mysqlnd
     - php56w-opcache
     - php56w-xml
     - php56w-mcrypt
@@ -24,6 +23,7 @@
     - php56w-soap
     - php56w-fpm
     - redis.x86_64
+    - letsencrypt
     - python-passlib
 
 - name: Creates nginx configs directory
@@ -31,6 +31,21 @@
     path: /etc/nginx/redbox.d
     state: directory
     mode: 755
+
+- name: Create Web root directory
+  file:
+      path: /var/www/magento/{{ env }}
+      state: directory
+      owner: mage
+      group: mage
+      mode: 0755
+
+- name: Create lestencrypt webroot
+  file:
+    path: /var/www/_letsencrypt
+    state: directory
+    mode: 755
+
 
 - name: Create http_auth passwd file
   htpasswd:
@@ -42,29 +57,47 @@
     mode: 0640
 
 
-- name: Create nginx configuration file
-  template: src=nginx.conf dest=/etc/nginx/nginx.conf
-  template: src=sites-enabled/example.com.conf dest=/etc/nginx/conf.d/{{ domain }}.conf
-  template: src=_general.conf dest=/etc/nginx/redbox.d/general.conf
-  template: src=_php.conf dest=/etc/nginx/redbox.d/php.conf
-  template: src=_php_fastcgi.conf dest=/etc/nginx/redbox.d/php_fastcgi.conf
-  template: src=_wordpress.conf dest=/etc/nginx/magento.d/magento.conf
-  template: src=_letsencrypt.conf dest=/etc/nginx/redbox.d/letsencrypt.conf
-  template: src=_ht_auth.conf dest=/etc/nginx/redbox.d/ht_auth.conf
+- name: Create Nginx config files
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  template:
+    src: sites-enabled/example.com.conf
+    dest: /etc/nginx/conf.d/{{ domain }}.conf
+  template:
+    src: _general.conf
+    dest: /etc/nginx/redbox.d/general.conf
+  template:
+    src: _php.conf
+    dest: /etc/nginx/redbox.d/php.conf
+  template:
+    src: _php_fastcgi.conf
+    dest: /etc/nginx/redbox.d/php_fastcgi.conf
+  template:
+    src: _wordpress.conf
+    dest: /etc/nginx/magento.d/magento.conf
+  template:
+    src: _letsencrypt.conf
+    dest: /etc/nginx/redbox.d/letsencrypt.conf
+  template:
+    src: _ht_auth.conf
+    dest: /etc/nginx/redbox.d/ht_auth.conf
   notify:
   #- restart nginx
   become: true
 
-- name: Create Web root directory
-  file:
-      path: /var/www/magento/{{ domain }}
-      state: directory
-      owner: mage
-      group: mage
-      mode: 0755
+#- name: Create letsencrypt certificate
+#  shell: letsencrypt certonly -n --webroot -w /var/www/_letsencrypt -m thiery.louison@redboxdigital.com --agree-tos -d {{ domain }}
+#  args:
+#    creates: /etc/letsencrypt/live/{{ domain }}
+
+- name: Generate dhparams
+  shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
+  args:
+    creates: /etc/nginx/dhparams.pem
 
 - name: Add wall.php script that demonstrates php and mysql functionality
-  template: src=wall.php dest=/var/www/magento/{{ domain }}
+  template: src=wall.php dest=/var/www/magento/{{ env }}
 
 - name: nginx service status
   service: name=nginx state=stopped enabled=yes
