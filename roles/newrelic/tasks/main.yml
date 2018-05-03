@@ -24,8 +24,8 @@
     - Restart New Relic
   when: newrelic_loaded_os_family|default(False) != False
 
-- name: Ensure New Relic Sysmond is started and enabled
-  service:
-    name: newrelic-sysmond
-    state: started
-    enabled: yes
+#- name: Ensure New Relic Sysmond is started and enabled
+#  service:
+#    name: newrelic-sysmond
+#    state: started
+#    enabled: yes

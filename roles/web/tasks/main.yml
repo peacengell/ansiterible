@@ -99,6 +99,11 @@
   notify:
     - restart nginx
 
+- name: Add magento cronjob
+  cron:
+    name: magento cron
+    user: mage
+    job: test
 
 - name: Generate dhparams
   shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048

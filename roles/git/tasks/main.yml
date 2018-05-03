@@ -11,3 +11,13 @@
   dest: /var/www/magento/{{ env }}/htdocs
   refspec: '+refs/pull/*:refs/heads/*'
   version: 1.14.2.1
+
+- name : Install Magento via composer
+  composer:
+    command: install
+    working_dir: //var/www/magento/{{ env }}/htdocs
+    no_dev: yes
+    prefer_dist : yes
+    optimize_autoloader: yes
+
+
