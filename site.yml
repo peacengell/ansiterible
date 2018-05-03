@@ -5,6 +5,12 @@
   become: yes
   roles:
     - common
+- name: deploy MySQL and configure the databases
+  hosts: database
+  user: ec2-user
+  become: yes
+  roles:
+    - database
 
 - name: configure and deploy the webservers and application code
   hosts: web
@@ -12,14 +18,6 @@
   become: yes
   roles:
     - web
-    - { role: newrelic, newrelic_license_key: ab0e123c0bdc8c77cc5922bd67416a080518181 }
+    #- { role: newrelic, newrelic_license_key: ab0e123c0bdc8c77cc5922bd67416a080518181 }
     - n98-magerun
     - composer
-    - git
-
-- name: deploy MySQL and configure the databases
-  hosts: database
-  user: ec2-user
-  become: yes
-  roles:
-    - database

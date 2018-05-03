@@ -1,21 +1,22 @@
 ---
-- name: Install Redbox Magento by git
-# Example checkout a github repo and use refspec to fetch all pull requests
-  git:
-    repo: git@bitbucket.org:redbox-digital/projects-nestlewater.git
-    dest: /var/www/magento/{{ env }}/
-    refspec: '+refs/pull/*:refs/heads/*'
+#- name: Install Redbox Magento by git
+## Example checkout a github repo and use refspec to fetch all pull requests
+#  git:
+#    repo: 'https://thieryl:"!"@bitbucket.org/redbox-digital/projects-nestlewater.git'
+#    dest: /var/www/magento/{{ env }}/.
+#    force: yes
+#    refspec: '+refs/pull/*:refs/heads/*'
 
-  git:
-  repo: git@bitbucket.org:redbox-digital/magento-ee.git
-  dest: /var/www/magento/{{ env }}/htdocs
-  refspec: '+refs/pull/*:refs/heads/*'
-  version: 1.14.2.1
+  #git:
+  #  repo: 'https://thieryl:"!"@bitbucket.org/redbox-digital/magento-ee.git'
+  #  dest: /var/www/magento/{{ env }}/htdocs
+  #  refspec: '+refs/pull/*:refs/heads/*'
+  #  version: 1.14.2.1
 
 - name : Install Magento via composer
   composer:
     command: install
-    working_dir: //var/www/magento/{{ env }}/htdocs
+    working_dir: //var/www/magento/{{ env }}/
     no_dev: yes
     prefer_dist : yes
     optimize_autoloader: yes

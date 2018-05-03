@@ -1,4 +1,4 @@
-## AWS Cloud Server + Magento + nginx + php + varnish + mysql Deployment<br/>
+## AWS Cloud Server + Magento + nginxc + php + varnish + mysql Deployment<br/>
 This playbook will install Magento and deps on AWS EC2 Cloud Server.<br/>
 Change configurations on group_vars/all to define hostname, domain, users, admin, etc.<br/>
 
