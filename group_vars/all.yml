@@ -2,7 +2,7 @@
 # Nginx
 domain: tricky-bit.com
 env : stag
-letsencrypt_email: thiery.louison@redboxfigital.com
+letsencrypt_email: thiery.louison@redboxdigital.com
 #database
 mysqlservice: mysqld
 mysql_port: 3306
