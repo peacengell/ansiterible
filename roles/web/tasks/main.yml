@@ -61,24 +61,38 @@
   template:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
+
+- name: Create Nginx config files 2
   template:
     src: sites-enabled/example.com.conf
     dest: /etc/nginx/conf.d/{{ domain }}.conf
+
+- name: Create Nginx config files 3
   template:
     src: _general.conf
     dest: /etc/nginx/redbox.d/general.conf
+
+- name: Create Nginx config files 4
   template:
     src: _php.conf
-    dest: /etc/nginx/redbox.d/php.conf
+  dest: /etc/nginx/redbox.d/php.conf
+
+- name: Create Nginx config files 5
   template:
     src: _php_fastcgi.conf
     dest: /etc/nginx/redbox.d/php_fastcgi.conf
+
+- name: Create Nginx config files 6
   template:
     src: _wordpress.conf
     dest: /etc/nginx/magento.d/magento.conf
+
+- name: Create Nginx config files 7
   template:
     src: _letsencrypt.conf
     dest: /etc/nginx/redbox.d/letsencrypt.conf
+
+- name: Create Nginx config files 8
   template:
     src: _ht_auth.conf
     dest: /etc/nginx/redbox.d/ht_auth.conf
@@ -113,8 +127,11 @@
 - name: Add wall.php script that demonstrates php and mysql functionality
   template: src=wall.php dest=/var/www/magento/{{ env }}
 
+- name: Configure PHP-FPM
+  command: rm -f /etc/php5/fpm/pool.d/www.conf
+
 - name: Add Redbox PHP-FPM config file
-  template: src=_php-fpm.conf dest=/etc/php-fpm.d/www.conf
+  template: src=_php-fpm.conf dest=/etc/php-fpm.d/{{ domain }}.conf
   notify:
   - restart php-fpm
   become: true
