@@ -85,7 +85,7 @@
 - name: Create Nginx config files 6
   template:
     src: _wordpress.conf
-    dest: /etc/nginx/magento.d/magento.conf
+    dest: /etc/nginx/redbox.d/magento.conf
 
 - name: Create Nginx config files 7
   template:
@@ -128,7 +128,9 @@
   template: src=wall.php dest=/var/www/magento/{{ env }}
 
 - name: Configure PHP-FPM
-  command: rm -f /etc/php5/fpm/pool.d/www.conf
+  file:
+    path: /etc/php5/fpm/pool.d/www.conf
+    state: absent
 
 - name: Add Redbox PHP-FPM config file
   template: src=_php-fpm.conf dest=/etc/php-fpm.d/{{ domain }}.conf
