@@ -75,7 +75,7 @@
 - name: Create Nginx config files 4
   template:
     src: _php.conf
-  dest: /etc/nginx/redbox.d/php.conf
+    dest: /etc/nginx/redbox.d/php.conf
 
 - name: Create Nginx config files 5
   template:

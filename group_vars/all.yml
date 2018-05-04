@@ -8,10 +8,10 @@ letsencrypt_email: thiery.louison@redboxdigital.com
 magento_version: 1.8.1.0
 
 # These are the magento database settings
-magento_db_name: magento
-magento_db_user: magento
-magento_db_password: secret
-magento_db_remote_host:
+magento_db_name: mage_stag
+magento_db_user: mage_stag
+magento_db_password: 'Zx$WUQEkUl#p'
+magento_db_remote_host: localhost
 
 # You shouldn't need to change this.
 mysql_port: 3306
@@ -20,14 +20,14 @@ mysql_host:
 # This is used for the nginx server configuration, but # access to the
 # magento site is not restricted by a # named host.
 server_hostname:
-mysql_root_password:
+mysql_root_password: 'GeSq2FfLZIRT'
 
 # Magento Admin info
-magento_admin_first: admin
-magento_admin_last: lastname
-magento_admin_email: admin@admin.com
-magento_admin_user: admin
-magento_admin_pass: 102030AA
+magento_admin_first: devops
+magento_admin_last: redbox
+magento_admin_email: devops@redboxdigital.com
+magento_admin_user: johndoe
+magento_admin_pass: FM6zKtn$ou2!
 magento_domain: http://{{ server_hostname }}/
 
 #System handlers
@@ -36,6 +36,7 @@ user: mage
 
 #PHP-FPM sockets or TCP
 php_listen: /var/run/php5-fpm.sock
+php_listen_tcp: 127.0.0.1:9001
 
 
 

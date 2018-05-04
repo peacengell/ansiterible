@@ -1,15 +1,28 @@
 ---
-- name: Install Mysql package
-  apt: name={{ item }} state=present update_cache=yes
+
+- name: upgrade all packages
+  yum: name=* state=latest
+
+- name: Install MySQL Repo
+  yum:
+    name: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+    state: present
+
+# Install the packages
+- name : Install MySQL Packages
+  yum: name={{item}} state=present
   with_items:
-   - mysql-server-5.7
-   - mysql-client-5.7
-   - python-mysqldb
+    - python-pip
+    - python-devel
+    - mysql-server
+    - mysql-devel
+    - MySQL-python
+  become: yes
 
 - name: update mysql root password for all root accounts
   mysql_user: name=root host={{ item }} password={{ mysql_root_password }}
   with_items:
-   - "{{ mysql_host }}"
+   #- "{{ mysql_host }}"
    - 127.0.0.1
    - ::1
    - localhost

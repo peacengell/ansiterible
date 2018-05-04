@@ -1,8 +1,8 @@
 ---
 
 - name: Install Varnish
-  apt: name=varnish state=present
-  
+  yum: name=varnish state=present
+
 - name: Copy varnish configuration
   template: src=varnish dest=/etc/default/varnish
 
